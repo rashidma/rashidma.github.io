@@ -38,10 +38,10 @@ Same pattern for `projects/` (`status: current | past`, `tags: [...]`) and `news
 
 ## Deploy (GitHub Pages, free)
 
-1. Create a GitHub repo and push this project.
-2. In the repo settings, under **Pages**, set the source to **GitHub Actions**.
-3. Edit `astro.config.mjs` and uncomment/set `site` and `base` to match your GitHub Pages URL (see the TODO comment in that file).
-4. Push to `main` — `.github/workflows/deploy.yml` builds and deploys automatically.
+Repo: https://github.com/rashidma/rashidma.github.io — deploys to **https://rashidma.github.io**.
+
+1. In the repo settings, under **Pages**, set the source to **GitHub Actions** (one-time setup).
+2. Push to `main` — `.github/workflows/deploy.yml` builds and deploys automatically.
 
 A custom domain can be added later via repo settings → Pages → "Custom domain", without changing the rest of the site.
 
