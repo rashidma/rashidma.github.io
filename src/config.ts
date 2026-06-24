@@ -32,6 +32,6 @@ in computational biology.`,
     linkedin: 'https://www.linkedin.com/in/mamoon-rashid-a175aa1a',
     googleScholar: 'https://scholar.google.com/citations?user=rWbAdH8AAAAJ&hl=en',
     orcid: 'https://orcid.org/0000-0003-1457-477X',
-    researchGate: '',
+    researchGate: 'https://www.researchgate.net/profile/Mamoon-Rashid-4',
   },
 };
