@@ -5,16 +5,55 @@ import SkillBadge from '../components/SkillBadge.astro';
 import NewsItem from '../components/NewsItem.astro';
 import { site } from '../config';
 
+const publications = await getCollection('publications');
+const projects = await getCollection('projects');
+const currentProjects = projects.filter((p) => p.data.status === 'current');
+
 const news = (await getCollection('news'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
+
+const stats = [
+  { value: publications.length, label: 'Publications' },
+  { value: currentProjects.length, label: 'Active Projects' },
+  { value: '2016', label: 'Research Scientist Since' },
+];
 ---
 
 <Layout>
-  <section>
-    <h1 class="font-serif text-3xl font-semibold text-slate-900">{site.name}</h1>
-    <p class="mt-1 text-lg text-slate-600">{site.role}</p>
-    <p class="mt-6 whitespace-pre-line leading-relaxed text-slate-700">{site.bio}</p>
+  <section class="-mx-6 -mt-12 bg-gradient-to-br from-teal-50 via-white to-white px-6 py-12 sm:mx-0 sm:mt-0 sm:rounded-2xl sm:px-10 sm:py-14 sm:ring-1 sm:ring-slate-100">
+    <div class="flex flex-col items-center gap-6 text-center sm:flex-row sm:items-center sm:gap-8 sm:text-left">
+      <img
+        src="/profile.jpg"
+        alt={site.name}
+        class="h-32 w-32 shrink-0 rounded-full object-cover ring-4 ring-white shadow-lg sm:h-40 sm:w-40"
+      />
+      <div>
+        <h1 class="font-serif text-3xl font-semibold text-slate-900 sm:text-4xl">{site.name}</h1>
+        <p class="mt-2 text-lg text-teal-800">{site.role}</p>
+        <p class="mt-1 text-sm text-slate-500">{site.location}</p>
+      </div>
+    </div>
+    <p class="mx-auto mt-8 max-w-2xl whitespace-pre-line text-center leading-relaxed text-slate-700 sm:mx-0 sm:text-left">
+      {site.bio}
+    </p>
+    <div class="mt-8 flex flex-wrap justify-center gap-4 sm:justify-start">
+      <a href="/publications" class="rounded-full bg-teal-700 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-teal-800">
+        View Publications
+      </a>
+      <a href="/projects" class="rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:border-teal-700 hover:text-teal-700">
+        View Projects
+      </a>
+    </div>
+  </section>
+
+  <section class="mt-10 grid grid-cols-3 gap-4 sm:gap-6">
+    {stats.map((stat) => (
+      <div class="rounded-xl border border-slate-200 bg-white py-5 text-center shadow-sm">
+        <p class="font-serif text-2xl font-semibold text-teal-700 sm:text-3xl">{stat.value}</p>
+        <p class="mt-1 text-xs text-slate-500 sm:text-sm">{stat.label}</p>
+      </div>
+    ))}
   </section>
 
   <section class="mt-12">
@@ -35,13 +74,4 @@ const news = (await getCollection('news'))
       </ul>
     </section>
   )}
-
-  <section class="mt-12 flex flex-wrap gap-4">
-    <a href="/publications" class="rounded-full bg-teal-700 px-4 py-2 text-sm text-white hover:bg-teal-800">
-      View Publications
-    </a>
-    <a href="/projects" class="rounded-full border border-slate-300 px-4 py-2 text-sm text-slate-700 hover:border-teal-700 hover:text-teal-700">
-      View Projects
-    </a>
-  </section>
 </Layout>

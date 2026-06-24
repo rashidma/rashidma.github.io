@@ -10,15 +10,22 @@ interface Props {
 
 const { title, authors, venue, year, type, link } = Astro.props;
 
-const typeLabel = { journal: 'Journal', conference: 'Conference', preprint: 'Preprint' }[type];
+const typeStyles = {
+  journal: { label: 'Journal', class: 'bg-teal-50 text-teal-700 ring-teal-200' },
+  conference: { label: 'Conference', class: 'bg-blue-50 text-blue-700 ring-blue-200' },
+  preprint: { label: 'Preprint', class: 'bg-amber-50 text-amber-700 ring-amber-200' },
+}[type];
 ---
 
-<li class="border-b border-slate-100 py-4 last:border-none">
-  <p class="font-medium text-slate-900">
-    {link ? <a href={link} target="_blank" rel="noopener noreferrer" class="hover:text-teal-700">{title}</a> : title}
-  </p>
+<li class="group rounded-lg border border-transparent px-3 py-4 transition-colors hover:border-slate-200 hover:bg-slate-50">
+  <div class="flex items-start justify-between gap-3">
+    <p class="font-medium text-slate-900">
+      {link ? <a href={link} target="_blank" rel="noopener noreferrer" class="group-hover:text-teal-700">{title}</a> : title}
+    </p>
+    <span class={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium uppercase tracking-wide ring-1 ${typeStyles.class}`}>
+      {typeStyles.label}
+    </span>
+  </div>
   <p class="mt-1 text-sm text-slate-600">{authors}</p>
-  <p class="mt-1 text-sm text-slate-500">
-    {venue} &middot; {year} &middot; <span class="uppercase tracking-wide">{typeLabel}</span>
-  </p>
+  <p class="mt-1 text-sm text-slate-500">{venue} &middot; {year}</p>
 </li>

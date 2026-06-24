@@ -15,12 +15,15 @@ const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
 ---
 
 <Layout title="Publications">
-  <h1 class="font-serif text-2xl font-semibold text-slate-900">Publications</h1>
+  <div class="flex items-baseline justify-between">
+    <h1 class="font-serif text-2xl font-semibold text-slate-900">Publications</h1>
+    <p class="text-sm text-slate-500">{publications.length} total</p>
+  </div>
 
   {years.map((year) => (
-    <section class="mt-8">
-      <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500">{year}</h2>
-      <ul class="mt-2">
+    <section class="mt-8 border-l-2 border-teal-100 pl-4">
+      <h2 class="font-serif text-base font-semibold text-teal-700">{year}</h2>
+      <ul class="mt-1 space-y-1">
         {byYear[year].map((pub) => <PublicationItem {...pub.data} />)}
       </ul>
     </section>

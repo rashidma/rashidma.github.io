@@ -2,19 +2,37 @@
 import { site } from '../config';
 
 const links = [
-  { label: 'Email', href: `mailto:${site.contact.email}` },
-  { label: 'LinkedIn', href: site.contact.linkedin },
-  { label: 'Google Scholar', href: site.contact.googleScholar },
-  { label: 'ORCID', href: site.contact.orcid },
-  { label: 'ResearchGate', href: site.contact.researchGate },
+  { label: 'Email', href: `mailto:${site.contact.email}`, badge: null },
+  { label: 'LinkedIn', href: site.contact.linkedin, badge: { text: 'in', bg: '#0a66c2' } },
+  { label: 'Google Scholar', href: site.contact.googleScholar, badge: { text: 'Sc', bg: '#4285f4' } },
+  { label: 'ORCID', href: site.contact.orcid, badge: { text: 'iD', bg: '#a6ce39' } },
+  { label: 'ResearchGate', href: site.contact.researchGate, badge: { text: 'RG', bg: '#00ccbb' } },
 ].filter((link) => link.href);
 ---
 
 <footer class="mt-16 border-t border-slate-200 bg-white">
-  <div class="mx-auto flex max-w-3xl flex-col items-center gap-3 px-6 py-8 text-sm text-slate-500">
-    <div class="flex flex-wrap justify-center gap-4">
+  <div class="mx-auto flex max-w-3xl flex-col items-center gap-4 px-6 py-10 text-sm text-slate-500">
+    <div class="flex flex-wrap justify-center gap-3">
       {links.map((link) => (
-        <a href={link.href} class="hover:text-teal-700" target="_blank" rel="noopener noreferrer">
+        <a
+          href={link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-2 rounded-full border border-slate-200 px-3 py-1.5 transition-colors hover:border-teal-700 hover:text-teal-700"
+        >
+          {link.badge ? (
+            <span
+              class="flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold text-white"
+              style={`background-color: ${link.badge.bg}`}
+            >
+              {link.badge.text}
+            </span>
+          ) : (
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+              <rect x="2.5" y="5" width="15" height="10" rx="1.5" />
+              <path d="M3 6l7 6 7-6" />
+            </svg>
+          )}
           {link.label}
         </a>
       ))}
