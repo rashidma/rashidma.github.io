@@ -1,0 +1,24 @@
+---
+interface Props {
+  title: string;
+  authors: string;
+  venue: string;
+  year: number;
+  type: 'journal' | 'conference' | 'preprint';
+  link?: string;
+}
+
+const { title, authors, venue, year, type, link } = Astro.props;
+
+const typeLabel = { journal: 'Journal', conference: 'Conference', preprint: 'Preprint' }[type];
+---
+
+<li class="border-b border-slate-100 py-4 last:border-none">
+  <p class="font-medium text-slate-900">
+    {link ? <a href={link} target="_blank" rel="noopener noreferrer" class="hover:text-teal-700">{title}</a> : title}
+  </p>
+  <p class="mt-1 text-sm text-slate-600">{authors}</p>
+  <p class="mt-1 text-sm text-slate-500">
+    {venue} &middot; {year} &middot; <span class="uppercase tracking-wide">{typeLabel}</span>
+  </p>
+</li>

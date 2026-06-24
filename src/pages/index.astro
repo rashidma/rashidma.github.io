@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import SkillBadge from '../components/SkillBadge.astro';
+import NewsItem from '../components/NewsItem.astro';
+import { site } from '../config';
+
+const news = (await getCollection('news'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<Layout>
+  <section>
+    <h1 class="font-serif text-3xl font-semibold text-slate-900">{site.name}</h1>
+    <p class="mt-1 text-lg text-slate-600">{site.role}</p>
+    <p class="mt-6 whitespace-pre-line leading-relaxed text-slate-700">{site.bio}</p>
+  </section>
+
+  <section class="mt-12">
+    <h2 class="font-serif text-xl font-semibold text-slate-900">Skills</h2>
+    <div class="mt-4 flex flex-wrap gap-2">
+      {site.skills.map((skill) => <SkillBadge label={skill} />)}
+    </div>
+  </section>
+
+  {news.length > 0 && (
+    <section class="mt-12">
+      <div class="flex items-baseline justify-between">
+        <h2 class="font-serif text-xl font-semibold text-slate-900">Latest News</h2>
+        <a href="/news" class="text-sm text-teal-700 hover:underline">View all &rarr;</a>
+      </div>
+      <ul class="mt-4">
+        {news.map((item) => <NewsItem date={item.data.date} title={item.data.title} />)}
+      </ul>
+    </section>
+  )}
+
+  <section class="mt-12 flex flex-wrap gap-4">
+    <a href="/publications" class="rounded-full bg-teal-700 px-4 py-2 text-sm text-white hover:bg-teal-800">
+      View Publications
+    </a>
+    <a href="/projects" class="rounded-full border border-slate-300 px-4 py-2 text-sm text-slate-700 hover:border-teal-700 hover:text-teal-700">
+      View Projects
+    </a>
+  </section>
+</Layout>

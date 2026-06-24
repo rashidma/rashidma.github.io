@@ -1,0 +1,24 @@
+---
+import { site } from '../config';
+
+const links = [
+  { label: 'Email', href: `mailto:${site.contact.email}` },
+  { label: 'LinkedIn', href: site.contact.linkedin },
+  { label: 'Google Scholar', href: site.contact.googleScholar },
+  { label: 'ORCID', href: site.contact.orcid },
+  { label: 'ResearchGate', href: site.contact.researchGate },
+].filter((link) => link.href);
+---
+
+<footer class="mt-16 border-t border-slate-200 bg-white">
+  <div class="mx-auto flex max-w-3xl flex-col items-center gap-3 px-6 py-8 text-sm text-slate-500">
+    <div class="flex flex-wrap justify-center gap-4">
+      {links.map((link) => (
+        <a href={link.href} class="hover:text-teal-700" target="_blank" rel="noopener noreferrer">
+          {link.label}
+        </a>
+      ))}
+    </div>
+    <p>{site.location}</p>
+  </div>
+</footer>
