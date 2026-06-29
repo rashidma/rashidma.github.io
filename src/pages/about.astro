@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../config';
+---
+
+<Layout title="About">
+  <h1 class="font-serif text-2xl font-semibold text-slate-900">About</h1>
+  <p class="mt-4 whitespace-pre-line leading-relaxed text-slate-700">{site.bio}</p>
+
+  <section class="mt-12">
+    <h2 class="font-serif text-xl font-semibold text-slate-900">Education</h2>
+    <ul class="mt-4">
+      {site.education.map((ed) => (
+        <li class="relative flex gap-4 border-l-2 border-teal-100 py-3 pl-5 last:pb-0">
+          <span class="absolute -left-[5px] top-5 h-2 w-2 rounded-full bg-teal-500"></span>
+          <span class="w-16 shrink-0 text-sm text-slate-500">{ed.year}</span>
+          <div>
+            <p class="font-medium text-slate-900">{ed.degree}, {ed.field}</p>
+            <p class="text-sm text-slate-600">{ed.institution}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="mt-12 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="font-serif text-xl font-semibold text-slate-900">Current Affiliations</h2>
+      <ul class="mt-4 space-y-4">
+        {site.affiliations.current.map((a) => (
+          <li>
+            <p class="font-medium text-slate-900">{a.name}</p>
+            <p class="text-sm text-slate-600">{a.role} &middot; {a.years}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <h2 class="font-serif text-xl font-semibold text-slate-900">Past Affiliations</h2>
+      <ul class="mt-4 space-y-4">
+        {site.affiliations.past.map((a) => (
+          <li>
+            <p class="font-medium text-slate-900">{a.name}</p>
+            <p class="text-sm text-slate-600">{a.role} &middot; {a.years}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="mt-12">
+    <h2 class="font-serif text-xl font-semibold text-slate-900">Teaching & Mentorship</h2>
+    <ul class="mt-4 space-y-3">
+      {site.teaching.map((item) => (
+        <li class="flex items-start gap-2.5 text-slate-700">
+          <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-teal-500"></span>
+          {item}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="mt-12">
+    <h2 class="font-serif text-xl font-semibold text-slate-900">Awards & Recognition</h2>
+    <ul class="mt-4 space-y-4">
+      {site.awards.map((award) => (
+        <li class="rounded-lg border border-amber-100 bg-amber-50/50 p-4">
+          <p class="font-medium text-slate-900">{award.title} <span class="font-normal text-slate-500">&middot; {award.years}</span></p>
+          <p class="mt-1 text-sm text-slate-600">{award.detail}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Layout>

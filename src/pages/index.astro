@@ -1,7 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import SkillBadge from '../components/SkillBadge.astro';
+import FocusTile from '../components/FocusTile.astro';
+import HighlightCard from '../components/HighlightCard.astro';
 import NewsItem from '../components/NewsItem.astro';
 import { site } from '../config';
 
@@ -13,11 +14,17 @@ const news = (await getCollection('news'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
 
+const highlights = (await getCollection('highlights'))
+  .filter((h) => h.data.featured)
+  .sort((a, b) => b.data.year - a.data.year);
+
 const stats = [
   { value: publications.length, label: 'Publications' },
   { value: currentProjects.length, label: 'Active Projects' },
   { value: '2016', label: 'Research Scientist Since' },
 ];
+
+const focusColors = ['#0f766e', '#1d4ed8', '#b45309', '#7c3aed', '#0891b2', '#be123c', '#15803d', '#4338ca'];
 ---
 
 <Layout>
@@ -34,15 +41,31 @@ const stats = [
         <p class="mt-1 text-sm text-slate-500">{site.location}</p>
       </div>
     </div>
-    <p class="mx-auto mt-8 max-w-2xl whitespace-pre-line text-center leading-relaxed text-slate-700 sm:mx-0 sm:text-left">
-      {site.bio}
+
+    <p class="mx-auto mt-8 max-w-2xl text-center font-serif text-xl leading-snug text-slate-900 sm:mx-0 sm:text-left">
+      {site.tagline}
     </p>
+    <p class="mx-auto mt-3 max-w-2xl text-center leading-relaxed text-slate-600 sm:mx-0 sm:text-left">
+      {site.shortBio}
+    </p>
+
+    <div class="mt-5 flex flex-wrap justify-center gap-2 sm:justify-start">
+      {site.heroCredentials.map((credential) => (
+        <span class="rounded-full bg-white px-3 py-1 text-xs font-medium text-teal-700 ring-1 ring-teal-200">
+          {credential}
+        </span>
+      ))}
+    </div>
+
     <div class="mt-8 flex flex-wrap justify-center gap-4 sm:justify-start">
       <a href="/publications" class="rounded-full bg-teal-700 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-teal-800">
         View Publications
       </a>
       <a href="/projects" class="rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:border-teal-700 hover:text-teal-700">
         View Projects
+      </a>
+      <a href="/about" class="rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:border-teal-700 hover:text-teal-700">
+        About Me
       </a>
     </div>
   </section>
@@ -57,11 +80,20 @@ const stats = [
   </section>
 
   <section class="mt-12">
-    <h2 class="font-serif text-xl font-semibold text-slate-900">Skills</h2>
-    <div class="mt-4 flex flex-wrap gap-2">
-      {site.skills.map((skill) => <SkillBadge label={skill} />)}
+    <h2 class="font-serif text-xl font-semibold text-slate-900">Research Focus</h2>
+    <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+      {site.skills.map((skill, i) => <FocusTile label={skill} color={focusColors[i % focusColors.length]} />)}
     </div>
   </section>
+
+  {highlights.length > 0 && (
+    <section class="mt-12">
+      <h2 class="font-serif text-xl font-semibold text-slate-900">Featured Research Highlights</h2>
+      <div class="mt-4 grid gap-4 sm:grid-cols-3">
+        {highlights.map((h) => <HighlightCard {...h.data} />)}
+      </div>
+    </section>
+  )}
 
   {news.length > 0 && (
     <section class="mt-12">
